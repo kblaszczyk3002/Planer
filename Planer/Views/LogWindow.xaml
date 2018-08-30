@@ -1,0 +1,17 @@
+﻿<Window x:Class="Planer.Views.LogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Planer.Views"
+        mc:Ignorable="d"
+        Title="Log wykonywanego procesu" Height="300" Width="370" DataContext="{Binding _logViewModel, Source={StaticResource GlobalViewModel}}">
+    <Grid>
+        <DataGrid x:Name="Logi" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding Logs}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="MessageType" Header="Typ" Binding="{Binding TypKomunikatu}" IsReadOnly="True" Width="70"/>
+                <DataGridTextColumn x:Name="LogList" Header="Log" Binding="{Binding Tresc}" IsReadOnly="True" Width="300"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

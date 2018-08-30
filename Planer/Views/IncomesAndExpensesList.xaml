@@ -1,0 +1,269 @@
+﻿<Window x:Class="Planer.Views.IncomesAndExpensesList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Planer.Views"
+        mc:Ignorable="d"
+        Title="Lista przychodów i wydatków" Height="400" Width="850" DataContext="{Binding _incomesAndExpensesListViewModel, Source={StaticResource GlobalViewModel}}"
+        ResizeMode="NoResize">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
+    </Window.Resources>
+    <Grid>
+        <DockPanel>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="35"/>
+                        <ColumnDefinition Width="35"/>
+                        <ColumnDefinition Width="415"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="40"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Row="0" Grid.Column="0" Width="30" Height="30" Command="{Binding Btn_previousClick}" Click="Previous">
+                        <Grid>
+                            <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\arrow_left.png"/>
+                        </Grid>
+                        <Button.ToolTip>Poprzednia</Button.ToolTip>
+                    </Button>
+                    <Button Grid.Row="0" Grid.Column="1" Width="30" Height="30" Command="{Binding Btn_nextClick}" Click="Next">
+                        <Grid>
+                            <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\arrow_right.png"/>
+                        </Grid>
+                        <Button.ToolTip>Następna</Button.ToolTip>
+                    </Button>
+                    <WrapPanel Grid.Row="0" Grid.Column="2" Margin="5">
+                        <TextBlock Grid.Row="0" Grid.Column="2" Text="Przychody:"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="2" Width="60" Text="{Binding SumIncomes}" Margin="5, 0, 0, 0"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="2">Wydatki:</TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="2" Width="60" Text="{Binding SumExpenses}" Margin="5, 0, 0, 0"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="2">Razem:</TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="2" Width="60" Text="{Binding ActualBudget}" Margin="5, 0, 0, 0"></TextBlock>
+                    </WrapPanel>
+                    <Button Grid.Row="0" Grid.Column="3" Width="30" Height="30" Margin="5,0" VerticalAlignment="Bottom" Click="DodajRekord">
+                        <Grid>
+                            <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\application_form_add.png"/>
+                        </Grid>
+                        <Button.ToolTip>Dodaj</Button.ToolTip>
+                    </Button>
+                    <Button Grid.Row="0" Grid.Column="4" Width="30" Height="30" Click="EdytujRekord">
+                        <Grid>
+                            <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\application_form_edit.png"/>
+                        </Grid>
+                        <Button.ToolTip>Edytuj</Button.ToolTip>
+                    </Button>
+                    <Button Grid.Row="0" Grid.Column="5" Width="30" Height="30" Click="UsunRekord">
+                        <Grid>
+                            <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\application_form_delete.png"/>
+                        </Grid>
+                        <Button.ToolTip>Usun</Button.ToolTip>
+                    </Button>
+                    <CheckBox Grid.Row="0" Grid.Column="6" Width="30" Height="30" x:Name="Sum" IsChecked="{Binding Path=IsVisible}">
+                        <CheckBox.Template>
+                            <ControlTemplate TargetType="{x:Type CheckBox}">
+                                <Grid>
+                                    <Image x:Name="Sum" Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\sum.png"/>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsChecked" Value="False">
+                                        <Setter TargetName="Sum" Property="Opacity" Value="0.5" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </CheckBox.Template>
+                        <CheckBox.ToolTip>Sumuj</CheckBox.ToolTip>
+                    </CheckBox>
+                </Grid>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Right">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="18"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Button Width="30" Height="30" Margin="5" Grid.Column="0" Grid.Row="1" Click="ListWindowClose">
+                        <Grid>
+                            <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\cancel.png"/>
+                        </Grid>
+                        <Button.ToolTip>Zamknij</Button.ToolTip>
+                    </Button>
+                </Grid>
+            </StackPanel>
+            <TabControl x:Name="TabIncomesAndExpensesList">
+                <TabItem Header="Praca">
+                    <StackPanel>
+                        <DataGrid x:Name="PrzychodyPraca" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding _IncomesAndExpensesList}" 
+                         AutoGenerateColumns="False" SelectedItem="{Binding SelectedRecord, Mode=TwoWay}" MaxHeight="310" VerticalScrollBarVisibility="Auto">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding Id}" Visibility="Hidden" />
+                                <DataGridTextColumn Header="Data" IsReadOnly="True" Binding="{Binding ReportDate}" />
+                                <DataGridTextColumn x:Name="gridColumnSalary" Header="Pensja" IsReadOnly="True" Binding="{Binding Salary}" />
+                                <DataGridTextColumn x:Name="gridColumnTraining" Header="Szkolenia" IsReadOnly="True" Binding="{Binding Training}" />
+                                <DataGridTextColumn x:Name="gridColumnBonus" Header="Premia" IsReadOnly="True" Binding="{Binding Bonus}" />
+                                <DataGridTextColumn x:Name="gridColumnAdditionalBenefits" Header="Inne dodatki" IsReadOnly="True" Binding="{Binding AdditionalBenefits}" />
+                                <DataGridTextColumn x:Name="gridSumWorkIncomes" Header="Suma" IsReadOnly="True" Binding="{Binding SumWorkIncomes}" Visibility="{Binding Source={x:Reference Sum}, Path=IsChecked, 
+                       Converter={StaticResource BoolToVisConverter}}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Dodatkowe zlecenia">
+                    <StackPanel>
+                        <DataGrid x:Name="PrzychodyDodatkoweZlecenia" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding _IncomesAndExpensesList}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedRecord, Mode=TwoWay}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding Id}" Visibility="Hidden" />
+                                <DataGridTextColumn Header="Data" IsReadOnly="True" Binding="{Binding ReportDate}" />
+                                <DataGridTextColumn x:Name="gridColumnPainting" Header="Malowanie" IsReadOnly="True" Binding="{Binding Painting}" />
+                                <DataGridTextColumn x:Name="gridColumnComputerProgramming" Header="Programowanie" IsReadOnly="True" Binding="{Binding ComputerProgramming}" />
+                                <DataGridTextColumn x:Name="gridColumnService" Header="Serwis" IsReadOnly="True" Binding="{Binding Service}" />
+                                <DataGridTextColumn x:Name="gridColumnOtherCommissionIncomes" Header="Inne" IsReadOnly="True" Binding="{Binding OtherCommissionIncomes}" />
+                                <DataGridTextColumn x:Name="gridSumCommissionIncomes" Header="Suma" IsReadOnly="True" Binding="{Binding SumOtherWorkIncomes}" Visibility="{Binding Source={x:Reference Sum}, Path=IsChecked, 
+                       Converter={StaticResource BoolToVisConverter}}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Sprzedaż">
+                    <StackPanel>
+                        <DataGrid x:Name="PrzychodySprzedaz" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding _IncomesAndExpensesList}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedRecord, Mode=TwoWay}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding Id}" Visibility="Hidden" />
+                                <DataGridTextColumn Header="Data" IsReadOnly="True" Binding="{Binding ReportDate}" />
+                                <DataGridTextColumn x:Name="gridColumnAllegroSales" Header="Allegro" IsReadOnly="True" Binding="{Binding AllegroSales}" />
+                                <DataGridTextColumn x:Name="gridColumnEBaySales" Header="EBay" IsReadOnly="True" Binding="{Binding EBaySales}" />
+                                <DataGridTextColumn x:Name="gridColumnMiniaturesSales" Header="Figurki" IsReadOnly="True" Binding="{Binding MiniaturesSales}" />
+                                <DataGridTextColumn x:Name="gridColumnOtherSalesIncomes" Header="Inne" IsReadOnly="True" Binding="{Binding OtherSalesIncomes}" />
+                                <DataGridTextColumn x:Name="gridSumSalesIncomes" Header="Suma" IsReadOnly="True" Binding="{Binding SumSalesIncomes}" Visibility="{Binding Source={x:Reference Sum}, Path=IsChecked, 
+                       Converter={StaticResource BoolToVisConverter}}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Prezenty">
+                    <StackPanel>
+                        <DataGrid x:Name="PrzychodyPrezenty" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding _IncomesAndExpensesList}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedRecord, Mode=TwoWay}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding Id}" Visibility="Hidden" />
+                                <DataGridTextColumn Header="Data" IsReadOnly="True" Binding="{Binding ReportDate}" />
+                                <DataGridTextColumn x:Name="gridColumnMoneyFromFamily" Header="Hajsy od rodziny" IsReadOnly="True" Binding="{Binding MoneyFromFamily}" />
+                                <DataGridTextColumn x:Name="gridColumnLottery" Header="Loteria" IsReadOnly="True" Binding="{Binding Lottery}" />
+                                <DataGridTextColumn x:Name="gridColumnInheritance" Header="Spadek" IsReadOnly="True" Binding="{Binding Inheritance}" />
+                                <DataGridTextColumn x:Name="gridColumnOtherPresentsIncomes" Header="Inne" IsReadOnly="True" Binding="{Binding OtherPresentsIncomes}" />
+                                <DataGridTextColumn x:Name="gridSumPresentsIncomes" Header="Suma" IsReadOnly="True" Binding="{Binding SumPresentsIncomes}" Visibility="{Binding Source={x:Reference Sum}, Path=IsChecked, 
+                       Converter={StaticResource BoolToVisConverter}}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Inne">
+                    <StackPanel>
+                        <DataGrid x:Name="PrzychodyInne" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding _IncomesAndExpensesList}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedRecord, Mode=TwoWay}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding Id}" Visibility="Hidden" />
+                                <DataGridTextColumn Header="Data" IsReadOnly="True" Binding="{Binding ReportDate}" />
+                                <DataGridTextColumn x:Name="gridColumnOtherIncomes" Header="Inne" IsReadOnly="True" Binding="{Binding OtherIncomes}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Jedzenie">
+                    <StackPanel>
+                        <DataGrid x:Name="WydatkiJedzenie" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding _IncomesAndExpensesList}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedRecord, Mode=TwoWay}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding Id}" Visibility="Hidden" />
+                                <DataGridTextColumn Header="Data" IsReadOnly="True" Binding="{Binding ReportDate}" />
+                                <DataGridTextColumn x:Name="gridColumnVegetables" Header="Warzywa" IsReadOnly="True" Binding="{Binding Vegetables}" />
+                                <DataGridTextColumn x:Name="gridColumnFruit" Header="Owoce" IsReadOnly="True" Binding="{Binding Fruit}" />
+                                <DataGridTextColumn x:Name="gridColumnDinnerIngredients" Header="Składniki na obiad" IsReadOnly="True" Binding="{Binding DinnerIngredients}" />
+                                <DataGridTextColumn x:Name="gridColumnBreakfastIngredients" Header="Składniki na śniadanie" IsReadOnly="True" Binding="{Binding BreakfastIngredients}" />
+                                <DataGridTextColumn x:Name="gridColumnSweets" Header="Słodycze" IsReadOnly="True" Binding="{Binding Sweets}" />
+                                <DataGridTextColumn x:Name="gridColumnJunkFood" Header="Fast Food" IsReadOnly="True" Binding="{Binding JunkFood}" />
+                                <DataGridTextColumn x:Name="gridSumFoodExpenses" Header="Suma" IsReadOnly="True" Binding="{Binding SumFoodExpenses}" Visibility="{Binding Source={x:Reference Sum}, Path=IsChecked, 
+                       Converter={StaticResource BoolToVisConverter}}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Sport">
+                    <StackPanel>
+                        <DataGrid x:Name="WydatkiSport" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding _IncomesAndExpensesList}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedRecord, Mode=TwoWay}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding Id}" Visibility="Hidden" />
+                                <DataGridTextColumn Header="Data" IsReadOnly="True" Binding="{Binding ReportDate}" />
+                                <DataGridTextColumn x:Name="gridColumnMultisport" Header="Multisport" IsReadOnly="True" Binding="{Binding Multisport}" />
+                                <DataGridTextColumn x:Name="gridColumnDanceCourse" Header="Kurs Tanca" IsReadOnly="True" Binding="{Binding DanceCourse}" />
+                                <DataGridTextColumn x:Name="gridColumnSupplements" Header="Odżywki" IsReadOnly="True" Binding="{Binding Supplements}" />
+                                <DataGridTextColumn x:Name="gridColumnWater" Header="Woda" IsReadOnly="True" Binding="{Binding Water}" />
+                                <DataGridTextColumn x:Name="gridSumSportExpenses" Header="Suma" IsReadOnly="True" Binding="{Binding SumSportExpenses}" Visibility="{Binding Source={x:Reference Sum}, Path=IsChecked, 
+                       Converter={StaticResource BoolToVisConverter}}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Mieszkanie">
+                    <StackPanel>
+                        <DataGrid x:Name="WydatkiMieszkanie" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding _IncomesAndExpensesList}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedRecord, Mode=TwoWay}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding Id}" Visibility="Hidden" />
+                                <DataGridTextColumn Header="Data" IsReadOnly="True" Binding="{Binding ReportDate}" />
+                                <DataGridTextColumn x:Name="gridColumnRent" Header="Czynsz" IsReadOnly="True" Binding="{Binding Rent}" />
+                                <DataGridTextColumn x:Name="gridColumnInternet" Header="Internet" IsReadOnly="True" Binding="{Binding Internet}" />
+                                <DataGridTextColumn x:Name="gridColumnFlatRepairs" Header="Naprawy" IsReadOnly="True" Binding="{Binding FlatRepairs}" />
+                                <DataGridTextColumn x:Name="gridColumnTelephone" Header="Telefon" IsReadOnly="True" Binding="{Binding Telephone}" />
+                                <DataGridTextColumn x:Name="gridColumnOtherFlatExpenses" Header="Inne wydatki mieszkaniowe" IsReadOnly="True" Binding="{Binding OtherFlatExpenses}" />
+                                <DataGridTextColumn x:Name="gridSumFlatExpenses" Header="Suma" IsReadOnly="True" Binding="{Binding SumFlatExpenses}" Visibility="{Binding Source={x:Reference Sum}, Path=IsChecked, 
+                       Converter={StaticResource BoolToVisConverter}}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Transport">
+                    <StackPanel>
+                        <DataGrid x:Name="WydatkiTransport" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding _IncomesAndExpensesList}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedRecord, Mode=TwoWay}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding Id}" Visibility="Hidden" />
+                                <DataGridTextColumn Header="Data" IsReadOnly="True" Binding="{Binding ReportDate}" />
+                                <DataGridTextColumn x:Name="gridColumnMonthlyPublicTransportTicket" Header="Bilet miesięczny" IsReadOnly="True" Binding="{Binding MonthlyPublicTransportTicket}" />
+                                <DataGridTextColumn x:Name="gridColumnBusTickets" Header="Autobus" IsReadOnly="True" Binding="{Binding BusTickets}" />
+                                <DataGridTextColumn x:Name="gridColumnTrainTickets" Header="Kolej" IsReadOnly="True" Binding="{Binding TrainTickets}" />
+                                <DataGridTextColumn x:Name="gridColumnGas" Header="Benzyna" IsReadOnly="True" Binding="{Binding Gas}" />
+                                <DataGridTextColumn x:Name="gridSumTransportExpenses" Header="Suma" IsReadOnly="True" Binding="{Binding SumTransportExpenses}" Visibility="{Binding Source={x:Reference Sum}, Path=IsChecked, 
+                       Converter={StaticResource BoolToVisConverter}}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Imprezy">
+                    <StackPanel>
+                        <DataGrid x:Name="WydatkiImprezy" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding _IncomesAndExpensesList}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedRecord, Mode=TwoWay}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding Id}" Visibility="Hidden" />
+                                <DataGridTextColumn Header="Data" IsReadOnly="True" Binding="{Binding ReportDate}" />
+                                <DataGridTextColumn x:Name="gridColumnCinema" Header="Kino" IsReadOnly="True" Binding="{Binding Cinema}" />
+                                <DataGridTextColumn x:Name="gridColumnTheatre" Header="Teatr" IsReadOnly="True" Binding="{Binding Theatre}" />
+                                <DataGridTextColumn x:Name="gridColumnPresents" Header="Prezenty" IsReadOnly="True" Binding="{Binding Presents}" />
+                                <DataGridTextColumn x:Name="gridColumnAlcohol" Header="Alkohol" IsReadOnly="True" Binding="{Binding Alcohol}" />
+                                <DataGridTextColumn x:Name="gridColumnOtherBeverages" Header="Inne napoje" IsReadOnly="True" Binding="{Binding OtherBeverages}" />
+                                <DataGridTextColumn x:Name="gridColumnOtherPartyExpenses" Header="Inne wydatki imprezowe" IsReadOnly="True" Binding="{Binding OtherPartyExpenses}" />
+                                <DataGridTextColumn x:Name="gridSumPartyExpenses" Header="Suma" IsReadOnly="True" Binding="{Binding SumPartyExpenses}" Visibility="{Binding Source={x:Reference Sum}, Path=IsChecked, 
+                       Converter={StaticResource BoolToVisConverter}}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Wielkość przychodów i wydatków">
+                    
+                </TabItem>
+            </TabControl>
+        </DockPanel>
+    </Grid>
+</Window>

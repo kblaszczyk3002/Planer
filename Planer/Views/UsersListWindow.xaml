@@ -1,0 +1,85 @@
+﻿<Window x:Class="Planer.Views.UsersListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Planer.Views"
+        mc:Ignorable="d"
+        Title="UsersListWindow" Height="300" Width="600" DataContext="{Binding _usersListViewModel, Source={StaticResource GlobalViewModel}}">
+    <Grid>
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Bottom">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="345"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="40"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Margin="5" Grid.Row="0" Grid.Column="0" Width="30" Height="30" Click="PreviousTab"  Visibility="Hidden">
+                        <Grid>
+                            <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\arrow_left.png"/>
+                        </Grid>
+                        <Button.ToolTip>Poprzednia</Button.ToolTip>
+                    </Button>
+                    <Button Margin="5" Grid.Row="0" Grid.Column="1" Width="30" Height="30" Click="NextTab"  Visibility="Hidden">
+                        <Grid>
+                            <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\arrow_right.png"/>
+                        </Grid>
+                        <Button.ToolTip>Następna</Button.ToolTip>
+                    </Button>
+                    <Button Grid.Row="0" Grid.Column="3" Width="30" Height="30" Margin="5" VerticalAlignment="Bottom" Click="DodajRekord">
+                        <Grid>
+                            <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\vcard_add.png"/>
+                        </Grid>
+                        <Button.ToolTip>Dodaj</Button.ToolTip>
+                    </Button>
+                    <Button Grid.Row="0" Grid.Column="4" Width="30" Height="30" Click="EdytujRekord">
+                        <Grid>
+                            <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\vcard_edit.png"/>
+                        </Grid>
+                        <Button.ToolTip>Edytuj</Button.ToolTip>
+                    </Button>
+                    <Button Grid.Row="0" Grid.Column="5" Width="30" Height="30" Click="UsunRekord">
+                        <Grid>
+                            <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\vcard_delete.png"/>
+                        </Grid>
+                        <Button.ToolTip>Usun</Button.ToolTip>
+                    </Button>
+                </Grid>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Right">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="18"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Button Margin="5" Grid.Column="0" Grid.Row="1" Width="30" Height="30" Click="Close">
+                        <Grid>
+                            <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\cancel.png"/>
+                        </Grid>
+                        <Button.ToolTip>Zamknij</Button.ToolTip>
+                    </Button>
+                </Grid>
+            </StackPanel>
+            <TabControl x:Name="TabUsersList">
+                <TabItem Header="Użytkownicy">
+                    <StackPanel>
+                        <DataGrid x:Name="ListaUzytkowników" ItemsSource="{Binding _listaUzytkownikow}" SelectedItem="{Binding SelectedUser, Mode=TwoWay}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" IsReadOnly="True" Binding="{Binding Id}" Visibility="Hidden" />
+                                <DataGridTextColumn Header="Akronim" IsReadOnly="True" Binding="{Binding Acronym}" />
+                                <DataGridTextColumn Header="Imię" IsReadOnly="True" Binding="{Binding Name}"/>
+                                <DataGridTextColumn Header="Nazwisko" IsReadOnly="True" Binding="{Binding Surname}"/>
+                                <DataGridTextColumn Header="e-mail" IsReadOnly="True" Binding="{Binding eMail}"/>
+                                <DataGridTextColumn Header="PESEL" IsReadOnly="True" Binding="{Binding PESEL}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+        </DockPanel>
+    </Grid>
+</Window>

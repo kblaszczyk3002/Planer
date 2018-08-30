@@ -1,0 +1,381 @@
+﻿<Window x:Class="Planer.Views.IncomesAndExpensesRecord"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:Planer.Views"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="Przychody i rozchody na dzień" Height="300" Width="600" DataContext="{Binding _incomesAndExpensesRecordViewModel, Source={StaticResource GlobalViewModel}}">
+    <Grid>
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Bottom">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="35"/>
+                        <ColumnDefinition Width="35"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Row="0" Grid.Column="0" Width="30" Height="30" Click="PreviousTab">
+                        <Grid>
+                            <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\arrow_left.png"/>
+                        </Grid>
+                        <Button.ToolTip>Poprzednia</Button.ToolTip>
+                    </Button>
+                    <Button Grid.Row="0" Grid.Column="1" Width="30" Height="30" Click="NextTab">
+                        <Grid>
+                            <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\arrow_right.png"/>
+                        </Grid>
+                        <Button.ToolTip>Następna</Button.ToolTip>
+                    </Button>
+                </Grid>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Right">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Button Margin="5" Grid.Column="0" Grid.Row="1" Width="30" Height="30" Click="Save">
+                        <Grid>
+                            <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\disk.png" HorizontalAlignment="Right" Width="26" Height="26" VerticalAlignment="Bottom"/>
+                        </Grid>
+                        <Button.ToolTip>Zapisz</Button.ToolTip>
+                    </Button>
+                    <Button Margin="5" Grid.Column="0" Grid.Row="2" Width="30" Height="30" Click="Close">
+                        <Grid>
+                            <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\cancel.png"/>
+                        </Grid>
+                        <Button.ToolTip>Zamknij</Button.ToolTip>
+                    </Button>
+                </Grid>
+            </StackPanel>
+            <TabControl x:Name="TabIncomesAndExpenses">
+                <TabItem Header="Przychody">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Bottom">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="35"/>
+                                    <ColumnDefinition Width="35"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Button Grid.Row="0" Grid.Column="0" Width="30" Height="30" Margin="0,0,1,0" VerticalAlignment="Top" Click="PreviousInnerTab">
+                                    <Grid>
+                                        <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\arrow_left.png"/>
+                                    </Grid>
+                                    <Button.ToolTip>Poprzednia</Button.ToolTip>
+                                </Button>
+                                <Button Grid.Row="0" Grid.Column="1" Width="30" Height="30" Click="NextInnerTab">
+                                    <Grid>
+                                        <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\arrow_right.png"/>
+                                    </Grid>
+                                    <Button.ToolTip>Następna</Button.ToolTip>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <TabControl x:Name="TabIncomes">
+                            <TabItem Header="Praca">
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="0" Grid.Row="0">pensja:</TextBlock>
+                                        <xctk:DecimalUpDown Name="pensjaNumeric" Grid.Column="1" Grid.Row="0" Increment=".01" Visibility="Visible" Value="{Binding Salary}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="2" Grid.Row="0">premia:</TextBlock>
+                                        <xctk:DecimalUpDown Name="premiaNumeric" Grid.Column="3" Grid.Row="0" Increment=".01" Visibility="Visible" Value="{Binding Bonus}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="0" Grid.Row="1">szkolenia:</TextBlock>
+                                        <xctk:DecimalUpDown Name="szkoleniaNumeric" Grid.Column="1" Grid.Row="1" Increment=".01" Visibility="Visible" Value="{Binding Training}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="2" Grid.Row="1">inne dodatki:</TextBlock>
+                                        <xctk:DecimalUpDown Name="inneDodatkiNumeric" Grid.Column="3" Grid.Row="1" Increment=".01" Visibility="Visible" Value="{Binding AdditionalBenefits}"></xctk:DecimalUpDown>
+                                    </Grid>
+                                </StackPanel>
+                            </TabItem>
+                            <TabItem Header="Dodatkowe zlecenia">
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="70"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="0" Grid.Row="0">malowanie:</TextBlock>
+                                        <xctk:DecimalUpDown Name="malowanieNumeric" Grid.Column="1" Grid.Row="0" Increment=".01" Visibility="Visible" Value="{Binding Painting}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="2" Grid.Row="0">programowanie:</TextBlock>
+                                        <xctk:DecimalUpDown Name="programmingNumeric" Grid.Column="3" Grid.Row="0" Increment=".01" Visibility="Visible" Value="{Binding ComputerProgramming}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="0" Grid.Row="1">serwis:</TextBlock>
+                                        <xctk:DecimalUpDown Name="serwisNumeric" Grid.Column="1" Grid.Row="1" Increment=".01" Visibility="Visible" Value="{Binding Service}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="2" Grid.Row="1">inne:</TextBlock>
+                                        <xctk:DecimalUpDown Name="inneDodatkoweZleceniaNumeric" Grid.Column="3" Grid.Row="1" Increment=".01" Visibility="Visible" Value="{Binding OtherCommissionIncomes}"></xctk:DecimalUpDown>
+                                    </Grid>
+                                </StackPanel>
+                            </TabItem>
+                            <TabItem Header="Sprzedaż">
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="0" Grid.Row="0">allegro:</TextBlock>
+                                        <xctk:DecimalUpDown Name="allegroNumeric" Grid.Column="1" Grid.Row="0" Increment=".01" Visibility="Visible" Value="{Binding AllegroSales}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="2" Grid.Row="0">modele:</TextBlock>
+                                        <xctk:DecimalUpDown Name="modeleNumeric" Grid.Column="3" Grid.Row="0" Increment=".01" Visibility="Visible" Value="{Binding MiniaturesSales}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="0" Grid.Row="1">eBay:</TextBlock>
+                                        <xctk:DecimalUpDown Name="eBayNumeric" Grid.Column="1" Grid.Row="1" Increment=".01" Visibility="Visible" Value="{Binding EBaySales}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="2" Grid.Row="1">inne:</TextBlock>
+                                        <xctk:DecimalUpDown Name="inneSprzedaneNumeric" Grid.Column="3" Grid.Row="1" Increment=".01" Visibility="Visible" Value="{Binding OtherSalesIncomes}"></xctk:DecimalUpDown>
+                                    </Grid>
+                                </StackPanel>
+                            </TabItem>
+                            <TabItem Header="Prezenty">
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="90"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="0" Grid.Row="0">hajsy od rodziny:</TextBlock>
+                                        <xctk:DecimalUpDown Name="hajsyNumeric" Grid.Column="1" Grid.Row="0" Increment=".01" Visibility="Visible" Value="{Binding MoneyFromFamily}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="2" Grid.Row="0">spadek:</TextBlock>
+                                        <xctk:DecimalUpDown Name="spadekNumeric" Grid.Column="3" Grid.Row="0" Increment=".01" Visibility="Visible" Value="{Binding Inheritance}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="0" Grid.Row="1">lotto:</TextBlock>
+                                        <xctk:DecimalUpDown Name="lottoNumeric" Grid.Column="1" Grid.Row="1" Increment=".01" Visibility="Visible" Value="{Binding Lottery}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="2" Grid.Row="1">inne:</TextBlock>
+                                        <xctk:DecimalUpDown Name="InneNumeric" Grid.Column="3" Grid.Row="1" Increment=".01" Visibility="Visible" Value="{Binding OtherPresentsIncomes}"></xctk:DecimalUpDown>
+                                    </Grid>
+                                </StackPanel>
+                            </TabItem>
+                            <TabItem Header="Inne">
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="0" Grid.Row="0">inne:</TextBlock>
+                                        <xctk:DecimalUpDown Name="InneInneNumeric" Grid.Column="1" Grid.Row="0" Increment=".01" Visibility="Visible" Value="{Binding OtherIncomes}"></xctk:DecimalUpDown>
+                                    </Grid>
+                                </StackPanel>
+                            </TabItem>
+                        </TabControl>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Wydatki">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Bottom">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="70"/>
+                                    <ColumnDefinition Width="70"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Button Grid.Row="0" Grid.Column="0" Width="70">Poprzednia</Button>
+                                <Button Grid.Row="0" Grid.Column="1" Width="60">Następna</Button>
+                            </Grid>
+                        </StackPanel>
+                        <TabControl x:Name="TabExpenses">
+                            <TabItem Header="Jedzenie">
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="0" Grid.Row="0">warzywa:</TextBlock>
+                                        <xctk:DecimalUpDown Grid.Column="1" Grid.Row="0" Increment=".01" Value="{Binding Vegetables}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="2" Grid.Row="0">składniki na obiad:</TextBlock>
+                                        <xctk:DecimalUpDown Name="obiadNumeric" Grid.Column="3" Grid.Row="0" Increment=".01" Visibility="Visible" Value="{Binding DinnerIngredients}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="0" Grid.Row="1">owoce:</TextBlock>
+                                        <xctk:DecimalUpDown Name="owoceNumeric" Grid.Column="1" Grid.Row="1" Increment=".01" Visibility="Visible" Value="{Binding Fruit}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="2" Grid.Row="1">składniki do kanapek:</TextBlock>
+                                        <xctk:DecimalUpDown Name="kanapkiNumeric" Grid.Column="3" Grid.Row="1" Increment=".01" Visibility="Visible" Value="{Binding BreakfastIngredients}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="0" Grid.Row="2">słodycze:</TextBlock>
+                                        <xctk:DecimalUpDown Name="slodyczeNumeric" Grid.Column="1" Grid.Row="2" Increment=".01" Visibility="Visible" Value="{Binding Sweets}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="2" Grid.Row="2">fast food:</TextBlock>
+                                        <xctk:DecimalUpDown Name="fastFoodNumeric" Grid.Column="3" Grid.Row="2" Increment=".01" Visibility="Visible" Value="{Binding JunkFood}"></xctk:DecimalUpDown>
+                                    </Grid>
+                                </StackPanel>
+                            </TabItem>
+                            <TabItem Header="Sport">
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="0" Grid.Row="0">Multisport:</TextBlock>
+                                        <xctk:DecimalUpDown Name="multisportNumeric" Grid.Column="1" Grid.Row="0" Increment=".01" Visibility="Visible" Value="{Binding Multisport}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="2" Grid.Row="0">kurs tanca:</TextBlock>
+                                        <xctk:DecimalUpDown Name="taniecNumeric" Grid.Column="3" Grid.Row="0" Visibility="Visible" Value="{Binding DanceCourse}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="0" Grid.Row="1">odżywki:</TextBlock>
+                                        <xctk:DecimalUpDown Name="odzywkiNumeric" Grid.Column="1" Grid.Row="1" Increment=".01" Visibility="Visible" Value="{Binding Supplements}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="2" Grid.Row="1">woda:</TextBlock>
+                                        <xctk:DecimalUpDown Name="wodaNumeric" Grid.Column="3" Grid.Row="1" Increment=".01" Visibility="Visible" Value="{Binding Water}"></xctk:DecimalUpDown>
+                                    </Grid>
+                                </StackPanel>
+                            </TabItem>
+                            <TabItem Header="Mieszkanie">
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="0" Grid.Row="0">opłaty mieszkaniowe:</TextBlock>
+                                        <xctk:DecimalUpDown Name="czynszNumeric" Grid.Column="1" Grid.Row="0" Increment=".01" Visibility="Visible" Value="{Binding Rent}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="2" Grid.Row="0">internet:</TextBlock>
+                                        <xctk:DecimalUpDown Name="internetNumeric" Grid.Column="3" Grid.Row="0" Increment=".01" Visibility="Visible" Value="{Binding Internet}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="0" Grid.Row="1">naprawy:</TextBlock>
+                                        <xctk:DecimalUpDown Name="naprawyNumeric" Grid.Column="1" Grid.Row="1" Increment=".01" Visibility="Visible" Value="{Binding FlatRepairs}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="2" Grid.Row="1">inne:</TextBlock>
+                                        <xctk:DecimalUpDown Name="InneMieszkanioweNumeric" Grid.Column="3" Grid.Row="1" Increment=".01" Visibility="Visible" Value="{Binding OtherFlatExpenses}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="0" Grid.Row="2">telefon:</TextBlock>
+                                        <xctk:DecimalUpDown Name="telefonNumeric" Grid.Column="1" Grid.Row="2" Increment=".01" Value="{Binding Telephone}"></xctk:DecimalUpDown>
+                                    </Grid>
+                                </StackPanel>
+                            </TabItem>
+                            <TabItem Header="Transport">
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="0" Grid.Row="0">bilet miesięczny:</TextBlock>
+                                        <xctk:DecimalUpDown Name="miesiecznyNumeric" Grid.Column="1" Grid.Row="0" Increment=".01" Visibility="Visible" Value="{Binding MonthlyPublicTransportTicket}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="2" Grid.Row="0">autobus:</TextBlock>
+                                        <xctk:DecimalUpDown Name="autobusNumeric" Grid.Column="3" Grid.Row="0" Increment=".01" Visibility="Visible" Value="{Binding BusTickets}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="0" Grid.Row="1">kolej:</TextBlock>
+                                        <xctk:DecimalUpDown Name="pociagNumeric" Grid.Column="1" Grid.Row="1" Increment=".01" Visibility="Visible" Value="{Binding TrainTickets}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="2" Grid.Row="1">paliwo:</TextBlock>
+                                        <xctk:DecimalUpDown Name="benzynaNumeric" Grid.Column="3" Grid.Row="1" Increment=".01" Visibility="Visible" Value="{Binding Gas}"></xctk:DecimalUpDown>
+                                    </Grid>
+                                </StackPanel>
+                            </TabItem>
+                            <TabItem Header="Imprezy">
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="0" Grid.Row="0">kino:</TextBlock>
+                                        <xctk:DecimalUpDown Name="kinoNumeric" Grid.Column="1" Grid.Row="0" Increment=".01" Visibility="Visible" Value="{Binding Cinema}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="2" Grid.Row="0">teatr:</TextBlock>
+                                        <xctk:DecimalUpDown Name="theatreNumeric" Grid.Column="3" Grid.Row="0" Increment=".01" Visibility="Visible" Value="{Binding Theatre}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="0" Grid.Row="1">prezenty:</TextBlock>
+                                        <xctk:DecimalUpDown Name="presentsNumeric" Grid.Column="1" Grid.Row="1" Increment=".01" Visibility="Visible" Value="{Binding Presents}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="2" Grid.Row="1">alkohol:</TextBlock>
+                                        <xctk:DecimalUpDown Name="alcoholNumeric" Grid.Column="3" Grid.Row="1" Increment=".01" Visibility="Visible" Value="{Binding Alcohol}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="0" Grid.Row="2">inne napoje:</TextBlock>
+                                        <xctk:DecimalUpDown Name="otherPartyBeveragesNumeric" Grid.Column="1" Grid.Row="2" Increment=".01" Visibility="Visible" Value="{Binding OtherBeverages}"></xctk:DecimalUpDown>
+                                        <TextBlock Grid.Column="2" Grid.Row="2">inne wydatki:</TextBlock>
+                                        <xctk:DecimalUpDown Name="otherPartyNumeric" Grid.Column="3" Grid.Row="2" Increment=".01" Visibility="Visible" Value="{Binding OtherPartyExpenses}"></xctk:DecimalUpDown>
+                                    </Grid>
+                                </StackPanel>
+                            </TabItem>
+                        </TabControl>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Inne">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="70"/>
+                                <ColumnDefinition Width="100"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0">data zapisu:</TextBlock>
+                            <DatePicker Grid.Column="1" Grid.Row="0" SelectedDateFormat="Short" SelectedDate="{Binding ReportDate}"></DatePicker>
+                        </Grid>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+        </DockPanel>
+    </Grid>
+</Window>

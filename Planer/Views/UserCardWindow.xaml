@@ -1,0 +1,179 @@
+﻿<Window x:Class="Planer.Views.UserCardWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Planer.Views"
+        xmlns:help="clr-namespace:Planer.Helpers"
+        mc:Ignorable="d"
+        Title="UserCardWindow" Height="420" Width="500" DataContext="{Binding _userCardViewModel, Source={StaticResource GlobalViewModel}}">
+    <Window.Resources>
+        <help:GenderConverter x:Key="genderConverterKey"/>
+    </Window.Resources>
+    <Grid>
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Bottom">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="40"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Margin="5" Grid.Row="0" Grid.Column="0" Width="30" Height="30" Click="PreviousTab"  Visibility="Hidden">
+                        <Grid>
+                            <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\arrow_left.png"/>
+                        </Grid>
+                        <Button.ToolTip>Poprzednia</Button.ToolTip>
+                    </Button>
+                    <Button Margin="5" Grid.Row="0" Grid.Column="1" Width="30" Height="30" Click="NextTab"  Visibility="Hidden">
+                        <Grid>
+                            <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\arrow_right.png"/>
+                        </Grid>
+                        <Button.ToolTip>Następna</Button.ToolTip>
+                    </Button>
+                </Grid>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Right">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Button Margin="5" Grid.Column="0" Grid.Row="1" Width="30" Height="30" Click="Save">
+                        <Grid>
+                            <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\disk.png" HorizontalAlignment="Right" Width="26" Height="26" VerticalAlignment="Bottom"/>
+                        </Grid>
+                        <Button.ToolTip>Zapisz</Button.ToolTip>
+                    </Button>
+                    <Button Margin="5" Grid.Column="0" Grid.Row="2" Width="30" Height="30" Click="Close">
+                        <Grid>
+                            <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\cancel.png"/>
+                        </Grid>
+                        <Button.ToolTip>Zamknij</Button.ToolTip>
+                    </Button>
+                </Grid>
+            </StackPanel>
+            <TabControl x:Name="TabUserCard">
+                <TabItem Header="Użytkownik">
+                    <StackPanel>
+                        <GroupBox HorizontalAlignment="Left" BorderThickness="3" Header="Dane użytkownika">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="130"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="130"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Margin="5" Grid.Column="0" Grid.Row="0">Akronim: </TextBlock>
+                                <TextBox Margin="5" Grid.Column="1" Grid.Row="0" Width="120" Text="{Binding Path=Acronym, Mode=TwoWay}"></TextBox>
+                                <!--<Button Margin="5" Grid.Column="2" Grid.Row="0" Width="20" Height="20" HorizontalAlignment="Left">
+                                    <Grid>
+                                        <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\key.png"/>
+                                    </Grid>
+                                    <Button.ToolTip>Zmien hasło</Button.ToolTip>
+                                </Button>-->
+                                <TextBlock Margin="5" Grid.Column="2" Grid.Row="0">Hasło:</TextBlock>
+                                <PasswordBox x:Name="haslo" Margin="5" Grid.Column="3" Grid.Row="0" Width="120" MaxLength="10"></PasswordBox>
+                                <TextBlock Margin="5" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right">Imię:</TextBlock>
+                                <TextBox Margin="5" Grid.Column="1" Grid.Row="1" Width="120" Text="{Binding Path=Name, Mode=TwoWay}"></TextBox>
+                                <TextBlock Margin="5" Grid.Column="2" Grid.Row="1">Nazwisko:</TextBlock>
+                                <TextBox Margin="5" Grid.Column="3" Grid.Row="1" Width="120" Text="{Binding Path=Surname, Mode=TwoWay}"></TextBox>
+                                <TextBlock Margin="5" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right">e-mail:</TextBlock>
+                                <TextBox Margin="5" Grid.Column="1" Grid.Row="2" Width="120" Text="{Binding Path=eMail, Mode=TwoWay}"></TextBox>
+                                <TextBlock Margin="5" Grid.Column="2" Grid.Row="2">PESEL:</TextBlock>
+                                <TextBox Margin="5" Grid.Column="3" Grid.Row="2" Width="120" Text="{Binding Path=PESEL, Mode=TwoWay}"></TextBox>
+                                <GroupBox Margin="5" Grid.Column="1" Grid.Row="3" Header="Płeć">
+                                    <WrapPanel>
+                                        <RadioButton IsChecked="{Binding Gender, Converter={StaticResource ResourceKey=genderConverterKey}, ConverterParameter=1}">Mężczyzna</RadioButton>
+                                        <RadioButton IsChecked="{Binding Gender, Converter={StaticResource ResourceKey=genderConverterKey}, ConverterParameter=2}">Kobieta</RadioButton>
+                                    </WrapPanel>
+                                </GroupBox>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox HorizontalAlignment="Left" BorderThickness="3" Header="Adres">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="90"/>
+                                    <ColumnDefinition Width="130"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="40"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Margin="5" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right">Ulica:</TextBlock>
+                                <TextBox Margin="5" Grid.Column="1" Grid.Row="0" Width="120" Text="{Binding Path=StreetName, Mode=TwoWay}"></TextBox>
+                                <TextBlock Margin="5" Grid.Column="2" Grid.Row="0">Nr domu:</TextBlock>
+                                <TextBox Margin="5" Grid.Column="3" Grid.Row="0" Text="{Binding Path=StreetNumber, Mode=TwoWay}"></TextBox>
+                                <TextBlock Margin="5" Grid.Column="4" Grid.Row="0">Nr lokalu:</TextBlock>
+                                <TextBox Margin="5" Grid.Column="5" Grid.Row="0" Text="{Binding Path=HouseNumber, Mode=TwoWay}"></TextBox>
+                                <TextBlock Margin="5" Grid.Column="0" Grid.Row="1">Kod pocztowy:</TextBlock>
+                                <TextBox Margin="5" Grid.Column="1" Grid.Row="1" Width="60" HorizontalAlignment="Left" Text="{Binding Path=PostalCode, Mode=TwoWay}"></TextBox>
+                                <TextBlock Margin="5" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right">Miasto:</TextBlock>
+                                <TextBox Margin="5" Grid.Column="1" Grid.Row="2" Width="80" HorizontalAlignment="Left" Text="{Binding Path=City, Mode=TwoWay}"></TextBox>
+                                <TextBlock Margin="5" Grid.Column="0" Grid.Row="3">Województwo:</TextBlock>
+                                <ComboBox Margin="5" Grid.Column="1" Grid.Row="3" Width="120" HorizontalAlignment="Left" ItemsSource="{Binding _listaWojewodztw}"
+                                          SelectedValue="{Binding Province, Mode=TwoWay}"></ComboBox>
+                            </Grid>
+                        </GroupBox>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Uprawnienia">
+                    <StackPanel>
+                        <GroupBox HorizontalAlignment="Left" BorderThickness="3" Header="Uprawnienia do modułów">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <CheckBox Margin="5" Grid.Column="0" Grid.Row="0" IsChecked="{Binding Path=ConfigAuthorization, Mode=TwoWay}">Konfiguracja</CheckBox>
+                                <CheckBox Margin="5" Grid.Column="1" Grid.Row="0" IsChecked="{Binding Path=DatabaseManagerAuthorization, Mode=TwoWay}">Menedżer Baz</CheckBox>
+                                <CheckBox Margin="5" Grid.Column="0" Grid.Row="1" IsChecked="{Binding Path=IncomesAndExpensesListAuthorization, Mode=TwoWay}">Lista przychodów i rozchodów</CheckBox>
+                                <CheckBox Margin="5" Grid.Column="1" Grid.Row="1" IsChecked="{Binding Path=UsersListAuthorization, Mode=TwoWay}">Lista użytkowników</CheckBox>
+                            </Grid>
+                        </GroupBox>
+                        <CheckBox Margin="5" x:Name="UserIsAdmin" IsChecked="{Binding Path=IsAdmin, Mode=TwoWay}">użytkownik jest administratorem</CheckBox>
+                        <Expander Header="uprawnienia administracyjne" IsEnabled="{Binding Source={x:Reference UserIsAdmin}, Path=IsChecked}">
+                            <GroupBox HorizontalAlignment="Left" BorderThickness="3" Header="Lista przychodów i rozchodów">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="280"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <CheckBox Margin="5" Grid.Column="0" Grid.Row="0" IsChecked="{Binding Path=ViewOtherUsersRecords, Mode=TwoWay}">Podgląd rekordów wszystkich użytkowników</CheckBox>
+                                    <CheckBox Margin="5" Grid.Column="0" Grid.Row="1" IsChecked="{Binding Path=DeletingOtherUsersRecords, Mode=TwoWay}">Usuwanie wpisów innych użytkowników</CheckBox>
+                                    <CheckBox Margin="5" Grid.Column="0" Grid.Row="2" IsChecked="{Binding Path=EditingOtherUsersRecords, Mode=TwoWay}">Edycja wpisów innych użytkowników</CheckBox>
+                                </Grid>
+                            </GroupBox>
+                        </Expander>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+        </DockPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,59 @@
+﻿<Window x:Class="Planer.Views.DatabaseCreator"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Planer.Views"
+        mc:Ignorable="d"
+        Title="Kreator bazy danych" Height="300" Width="300" DataContext="{Binding _databaseCreatorViewModel, Source={StaticResource GlobalViewModel}}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="0" Grid.Row="0">
+            <GroupBox Width="270" BorderThickness="3" Header="Dane serwera">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" Margin="5">adres serwera:</TextBlock>
+                    <TextBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Width="120" Margin="5" Text="{Binding Path=_server, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" Margin="5">nazwa bazy:</TextBlock>
+                    <TextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Width="120" Margin="5" Text="{Binding Path=_database, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                </Grid>
+            </GroupBox>
+        </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="1">
+            <GroupBox Width="270" BorderThickness="3" Header="Dane użytkownika:">
+                <StackPanel Margin="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" Margin="5">użytkownik SQL:</TextBlock>
+                        <TextBox Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Width="120" Margin="5" Text="{Binding Path=_login, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" Margin="5">hasło:</TextBlock>
+                        <PasswordBox x:Name="Haslo"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Width="120" Margin="5"></PasswordBox>
+                    </Grid>
+                    <Button HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="25" Height="25" Margin="5" Click="Button_Click">
+                        <Grid>
+                            <Image Source="C:\Users\krzys\OneDrive\Dokumenty\Visual Studio 2015\Projects\Planer\Planer\Resources\database_add.png"/>
+                        </Grid>
+                        <Button.ToolTip>Kreuj bazę</Button.ToolTip>
+                    </Button>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</Window>
