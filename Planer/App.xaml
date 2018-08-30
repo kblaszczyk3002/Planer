@@ -1,0 +1,12 @@
+﻿<Application x:Class="Planer.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Planer"
+             xmlns:VM="clr-namespace:Planer.ViewModels"
+             Startup="Application_Startup">
+    <Application.Resources>
+        <ResourceDictionary>
+            <VM:GlobalViewModel x:Key="GlobalViewModel" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
